@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var rot13 map[string]string = {
+var rot13 = map[string]string{
 	"a": "m",
 	"b": "n",
 	"c": "o",
@@ -67,7 +67,7 @@ type rot13Reader struct {
 
 func (r rot13Reader) Read(b []byte) (n int, err error) {
 	for i := range b {
-		b[i] = 'A'
+		b[i] = rot13[b[i]]
 	}
 	return len(b), nil
 }
