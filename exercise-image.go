@@ -1,9 +1,11 @@
 package main
 
 import (
-	"golang.org/x/tour/pic"
 	"image"
 	"image/color"
+	"math"
+
+	"golang.org/x/tour/pic"
 )
 
 type Point struct {
@@ -23,11 +25,12 @@ func (i Image) Bounds() image.Rectangle {
 }
 
 func (i Image) At(x, y int) color.Color {
-	v := uint8((x*x + y*y) % 256)
+	v := uint8(math.Sin(float64((x*x+y*y)/(i.Max.X/4))) * float64(i.Max.X))
 	return color.RGBA{v, v, 255, 255}
 }
 
 func main() {
-	m := Image{Point{0, 0}, Point{256, 256}}
+	m := Image{Point{0, 0}, Point{400, 400}}
 	pic.ShowImage(m)
 }
+
