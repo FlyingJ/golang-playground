@@ -82,4 +82,7 @@ func main() {
 	fmt.Printf("There are %d VMs reporting info.\n", len(json_unmarshalled.VirtualMachines))
 	fmt.Println()
 	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Runtime.PowerState)
+	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Guest["ToolsStatus"])
+	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Guest["HostName"])
+	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Guest["IpAddress"])
 }
