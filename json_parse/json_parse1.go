@@ -64,25 +64,40 @@ type VMInfo struct {
 }
 
 func main() {
-	json_stream, err := ioutil.ReadFile("./jmh-test-govc.powerOn.json")
+	vminfo_json, err := ioutil.ReadFile("./jmh-test-govc.powerOn.json")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	var json_unmarshalled VMInfo
+	var VMInfoResult VMInfo
 
-	err = json.Unmarshal(json_stream, &json_unmarshalled)
+	err = json.Unmarshal(vminfo_json, &VMInfoResult)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("json_unmarshalled is of type: %T\n", json_unmarshalled)
-	fmt.Printf("%v\n", json_unmarshalled)
+	fmt.Printf("json_unmarshalled is of type: %T\n", VMInfoResult)
+	fmt.Printf("%v\n", VMInfoResult)
 
-	fmt.Printf("There are %d VMs reporting info.\n", len(json_unmarshalled.VirtualMachines))
+	fmt.Printf("There are %d VMs reporting info.\n", len(VMInfoResult.VirtualMachines))
 	fmt.Println()
-	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Runtime.PowerState)
-	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Guest["ToolsStatus"])
-	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Guest["HostName"])
-	fmt.Println(json_unmarshalled.VirtualMachines[0].Summary.Guest["IpAddress"])
+	// vmPowerState := VMInfoResult.VirtualMachines[0].Summary.Runtime.PowerState
+	vmToolsStatus := VMInfoResult.VirtualMachines[0].Summary.Guest["ToolsStatus"]
+	vmHostName := VMInfoResult.VirtualMachines[0].Summary.Guest["HostName"]
+	vmIpAddress := VMInfoResult.VirtualMachines[0].Summary.Guest["IpAddress"]
+	fmt.Println(vmToolsStatus)
+	fmt.Println(vmHostName)
+	if ok := IsRunning(&VMInfoResult); ok {
+		fmt.Printf("%s is running\n", VMInfoResult.VirtualMachines[0].Name)
+	} else {
+		fmt.Printf("%s is not running\n", VMInfoResult.VirtualMachines[0].Name)
+	}
+	fmt.Println(vmIpAddress)
+}
+
+func IsRunning(vminfo *VMInfo) bool {
+	if vminfo.VirtualMachines[0].Summary.Runtime.PowerState == "poweredOn" {
+		return true
+	}
+	return false
 }
