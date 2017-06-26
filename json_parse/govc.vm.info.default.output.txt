@@ -1,0 +1,10 @@
+Name:           jmh-test-govc
+  Path:         /NA-US-Chicago-22WW-Dev/vm/jmh-test/jmh-test-govc
+  UUID:         422c5900-7924-15d0-4d1b-3e8bec23f455
+  Guest name:   CentOS 4/5/6/7 (64-bit)
+  Memory:       4096MB
+  CPU:          2 vCPU(s)
+  Power state:  poweredOff
+  Boot time:    2017-06-23 21:08:35.94831 +0000 UTC
+  IP address:   
+  Host:         msesxdev801.morningstar.com
