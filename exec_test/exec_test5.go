@@ -13,7 +13,7 @@ func sliceToMap(newSlice []string) map[string]string {
 	newMap := make(map[string]string)
 
 	for _, newString := range newSlice {
-		splitString := strings.Split(newString, "=")
+		splitString := strings.SplitN(newString, "=", 2)
 		k := splitString[0]
 		v := splitString[1]
 		newMap[k] = v
